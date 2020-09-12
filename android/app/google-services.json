@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "810098109692",
+    "firebase_url": "https://chat-app-89929.firebaseio.com",
+    "project_id": "chat-app-89929",
+    "storage_bucket": "chat-app-89929.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810098109692:android:860685104ed79229847b79",
+        "android_client_info": {
+          "package_name": "com.jerry.chat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810098109692-p1sjipthrgum4nt9j808ci55n62u61mk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5hzmxT79u5ulIIwJk-mclX69vvoSAw7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810098109692-p1sjipthrgum4nt9j808ci55n62u61mk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
