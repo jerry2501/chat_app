@@ -1,9 +1,13 @@
+
+import 'dart:io';
+
+import 'package:chat_app/widgets/pickers/user_image_picker.dart';
 import 'package:flutter/material.dart';
 
 class AuthForm extends  StatefulWidget {
   AuthForm(this.submitFn,this._isLoading);
   var _isLoading;
-  final void Function(String email,String password,String username,bool isLogin,BuildContext ctx) submitFn;
+  final void Function(String email,String password,String username,File image,bool isLogin,BuildContext ctx) submitFn;
   @override
   _AuthFormState createState() => _AuthFormState();
 }
@@ -14,13 +18,27 @@ class _AuthFormState extends State<AuthForm> {
   String _userEmail='';
   String _userName='';
   String _userPassword='';
+  File _userImageFile;
+
+  void _pickedImage(File image){
+    _userImageFile=image;
+  }
 
   void _trySubmit(){
     final _isValid=_formkey.currentState.validate();
     FocusScope.of(context).unfocus(); //close the keyboard
+    if(_userImageFile==null && !_isLogin){
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please Pick an image.'),
+          backgroundColor: Theme.of(context).errorColor,
+        )
+      );
+      return;
+    }
     if(_isValid){
       _formkey.currentState.save();
-      widget.submitFn(_userEmail.trim(),_userPassword.trim(),_userName.trim(),_isLogin,context);
+      widget.submitFn(_userEmail.trim(),_userPassword.trim(),_userName.trim(),_userImageFile,_isLogin,context);
     }
   }
 
@@ -37,8 +55,13 @@ class _AuthFormState extends State<AuthForm> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  if(!_isLogin)
+                  UserImagePicker(_pickedImage),
                   TextFormField(
                     key: ValueKey('email'),
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.none,
+                    enableSuggestions: false,
                     validator:(value){
                       if(value.isEmpty || !value.contains('@')){
                         return 'please Enter a valid email address.';
@@ -56,6 +79,9 @@ class _AuthFormState extends State<AuthForm> {
                   if(!_isLogin)
                    TextFormField(
                      key: ValueKey('username'),
+                    autocorrect: true,
+                    textCapitalization: TextCapitalization.words,
+                    enableSuggestions: false,
                     validator:(value){
                       if(value.isEmpty || value.length<4){
                         return 'Please enter at least 4 characters';
